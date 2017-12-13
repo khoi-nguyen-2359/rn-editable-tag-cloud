@@ -132,7 +132,9 @@ const styles = StyleSheet.create({
 		marginTop: 5,
 		borderBottomWidth: 2,
 		borderBottomColor: '#dedede',
-		flex: 1
+		flex: 1,
+		flexDirection: 'row',
+		alignItems: 'center',
 	},
 })
 
