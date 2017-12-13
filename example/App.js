@@ -9,7 +9,8 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native'
 
 import { EditableTagCloud } from 'rn-editable-tag-cloud'
@@ -19,32 +20,42 @@ export default class App extends Component<{}> {
     allTags: ['tag1', 'tag2', 'tag3']
   }
 
+  _renderItem = (item, index) => {
+    return (
+      <TouchableOpacity 
+        onPress={()=>{
+          this.state.allTags.splice(index, 1)
+          this.setState({ allTags: this.state.allTags })
+        }}
+        style={{
+          borderRadius: 5,
+          marginTop: 5,
+          marginRight: 5,
+          padding: 5,
+          backgroundColor: 'green',
+        }}>
+        <Text style={{
+          color: 'white',
+        }}>{item}</Text>
+      </TouchableOpacity>
+    )
+  }
+
+  _onAddTag = newTag => {
+    this.state.allTags.push(newTag)
+    this.setState({ allTags: this.state.allTags })
+  }
+
   render() {
-    let { allTags } = this.state
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
           Editable Tag Cloud example
         </Text>
         <EditableTagCloud
-          items={allTags} 
-          onAddTag={newTag=>{
-            allTags.push(newTag)
-            this.setState({ allTags })
-          }}
-          renderItem={(item, index) => 
-            <View style={{
-              borderRadius: 5,
-              marginTop: 5,
-              marginRight: 5,
-              padding: 5,
-              backgroundColor: 'green',
-            }}>
-              <Text style={{
-                color: 'white',
-              }}>{item}</Text>
-            </View>
-          } />
+          items={this.state.allTags} 
+          onAddTag={this._onAddTag}
+          renderItem={this._renderItem} />
       </View>
     )
   }
