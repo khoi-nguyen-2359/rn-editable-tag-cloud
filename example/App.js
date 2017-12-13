@@ -53,15 +53,33 @@ export default class App extends Component<{}> {
           Editable Tag Cloud example
         </Text>
         <EditableTagCloud
-          items={this.state.allTags} 
-          onAddTag={this._onAddTag}
-          renderItem={this._renderItem} />
+          onItemsChanged={items => this.setState({allTags: items})}
+          addable
+          removable
+          itemTextStyle={styles.itemTextStyle}
+          itemWrapStyle={styles.itemWrapStyle}
+          tagInputStyle={styles.tagInputStyle}
+          tagInputWrapStyle={styles.tagInputWrapStyle}
+          items={this.state.allTags} />
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  tagInputWrapStyle: {
+    height: 30
+  },
+  tagInputStyle: {
+
+  },
+  itemTextStyle: {
+    
+  },
+  itemWrapStyle: {
+    height: 30,
+    justifyContent: 'center'
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
