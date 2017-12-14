@@ -144,12 +144,19 @@ class EditableTagCloud extends React.Component {
 		})
 
 		return (
-			<View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+			<View style={[styles.container, this.props.style]}>
 				{childItems}
 				{this._renderTagInput()}
 			</View>
 		)
 	}
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flexDirection: 'row', 
+		flexWrap: 'wrap' 
+	}
+})
 
 export { EditableTagCloud }
