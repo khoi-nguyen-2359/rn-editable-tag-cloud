@@ -46,6 +46,14 @@ export default class App extends Component<{}> {
     this.setState({ allTags: this.state.allTags })
   }
 
+  _renderItem = (item, index) => {
+    return (
+      <View style={styles.itemWrap}>
+        <Text style={styles.itemText}>{item}</Text>
+      </View>
+    )
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -53,14 +61,16 @@ export default class App extends Component<{}> {
           Editable Tag Cloud example
         </Text>
         <EditableTagCloud
-          delimiters={[',', '/']}
-          onItemsChanged={items => this.setState({allTags: items})}
           addable
           removable
-          itemTextStyle={styles.itemTextStyle}
-          itemWrapStyle={styles.itemWrapStyle}
-          tagInputStyle={styles.tagInputStyle}
-          tagInputWrapStyle={styles.tagInputWrapStyle}
+          tagInputProps={{
+            underlineColorAndroid: 'rgba(0,0,0,0)',
+            style: styles.tagInput
+          }}
+          tagInputWrapStyle={styles.tagInputWrap}
+          delimiters={[',', '/']}
+          onItemsChanged={items => this.setState({allTags: items})}
+          renderItem={this._renderItem}
           items={this.state.allTags} />
       </View>
     )
@@ -71,16 +81,30 @@ const styles = StyleSheet.create({
   tagInputWrapStyle: {
     height: 30
   },
-  tagInputStyle: {
-
-  },
-  itemTextStyle: {
-    
-  },
-  itemWrapStyle: {
-    height: 30,
-    justifyContent: 'center'
-  },
+	tagInput: {
+		flex: 1,
+		...Platform.select({
+			android: {
+				paddingBottom: 0,
+				paddingLeft: 0,
+				height: 30,
+			},
+			ios: {
+				height: 20,
+			}
+		}),
+		textAlignVertical: 'center'
+	},
+  itemWrap: {
+		padding: 5,
+		backgroundColor: 'rgb(40,172,182)',
+		marginRight: 5,
+    marginTop: 5,
+    borderRadius: 5,
+	},
+	itemText: {
+		color: 'white',
+	},
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -98,4 +122,12 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+	tagInputWrap: {
+    borderBottomColor: '#dedede',
+    borderBottomWidth: 1,
+		marginTop: 5,
+		flex: 1,
+		flexDirection: 'row',
+		alignItems: 'center',
+	},
 });

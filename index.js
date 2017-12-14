@@ -43,15 +43,14 @@ class EditableTagCloud extends React.Component {
 	}
 
 	_renderItem = (item, index) => {
-		const { itemTextStyle, itemWrapStyle, removable } = this.props
-		
+		const { removable, renderItem } = this.props
+
 		return (
 			<TouchableOpacity
 				disabled={!removable}
 				onPress={()=>this._removeTags(index)}
-				style={[styles.itemWrap, itemWrapStyle]}
 			>
-				<Text style={[styles.itemText, itemTextStyle]}>{item}</Text>
+				{renderItem(item, index)}
 			</TouchableOpacity>
 		)
 	}
@@ -97,13 +96,13 @@ class EditableTagCloud extends React.Component {
 	}
 
 	_renderTagInput = () => {
-		const { tagInputStyle, tagInputWrapStyle, addable } = this.props
+		const { tagInputWrapStyle, addable, tagInputProps } = this.props
 		if (!addable) return null
 
 		return (
-			<View style={[styles.tagInputWrap, tagInputWrapStyle]}>
+			<View style={tagInputWrapStyle}>
 				<TextInput
-					style={[styles.tagInput, tagInputStyle]}
+					{...tagInputProps}
 					ref='tagInput'
 					onLayout={this._onLayoutTagInput}
 					value={this.state.addingTag}
@@ -153,30 +152,5 @@ class EditableTagCloud extends React.Component {
 		)
 	}
 }
-
-const styles = StyleSheet.create({
-	itemWrap: {
-		padding: 5,
-		backgroundColor: 'rgb(40,172,182)',
-		borderRadius: 5,
-		marginRight: 5,
-		marginTop: 5,
-	},
-	itemText: {
-		color: 'white',
-	},
-	tagInput: {
-		height: Platform.OS == 'ios' ? 20 : 30,
-		flex: 1,
-	},
-	tagInputWrap: {
-		marginTop: 5,
-		borderBottomWidth: 1,
-		borderBottomColor: '#dedede',
-		flex: 1,
-		flexDirection: 'row',
-		alignItems: 'center',
-	},
-})
 
 export { EditableTagCloud }
