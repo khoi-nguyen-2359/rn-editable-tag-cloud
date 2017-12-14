@@ -20,27 +20,6 @@ export default class App extends Component<{}> {
     allTags: ['tag1', 'tag2', 'tag3']
   }
 
-  _renderItem = (item, index) => {
-    return (
-      <TouchableOpacity 
-        onPress={()=>{
-          this.state.allTags.splice(index, 1)
-          this.setState({ allTags: this.state.allTags })
-        }}
-        style={{
-          borderRadius: 5,
-          marginTop: 5,
-          marginRight: 5,
-          padding: 5,
-          backgroundColor: 'green',
-        }}>
-        <Text style={{
-          color: 'white',
-        }}>{item}</Text>
-      </TouchableOpacity>
-    )
-  }
-
   _onAddTag = newTag => {
     this.state.allTags.push(newTag)
     this.setState({ allTags: this.state.allTags })
@@ -61,15 +40,12 @@ export default class App extends Component<{}> {
           Editable Tag Cloud example
         </Text>
         <EditableTagCloud
-          tagInputMinWidth={100}
-          addable
-          removable
+          tagInputMinWidth={30}
           tagInputProps={{
             underlineColorAndroid: 'rgba(0,0,0,0)',
             style: styles.tagInput
           }}
           tagInputWrapStyle={styles.tagInputWrap}
-          delimiters={[',', '/']}
           onItemsChanged={items => this.setState({allTags: items})}
           renderItem={this._renderItem}
           items={this.state.allTags} />
