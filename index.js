@@ -83,6 +83,19 @@ class EditableTagCloud extends React.Component {
 		})
 	}
 
+	_splitTags(input) {
+		const { delimiters } = this.props
+		if (!delimiters || !input) return null
+
+		for (let delim in delimiters) {
+			delim = delimiters[delim]
+			let tags = input.search(delim) != -1 && input.split(delim).map(value => value.trim()).filter(value => value.length > 0)
+			if (tags && tags.length > 0) return tags
+		}
+
+		return null
+	}
+
 	_renderTagInput = () => {
 		const { tagInputStyle, tagInputWrapStyle, addable } = this.props
 		if (!addable) return null
@@ -95,15 +108,15 @@ class EditableTagCloud extends React.Component {
 					onLayout={this._onLayoutTagInput}
 					value={this.state.addingTag}
 					onChangeText={addingTag => {
-						if (addingTag.search(',') != -1) {
-							let tags = (addingTag.split(',') || []).map(value => value.trim()).filter(value => value.length > 0)
-							this._addTags(tags)
+						let splitTags = this._splitTags(addingTag)
+						if (splitTags && splitTags.length > 0) {
+							this._addTags(splitTags)
 						} else {
 							this.setState({ addingTag })
 						}
 					}}
 					onSubmitEditing={() => {
-						let { addingTag, items } = this.state
+						let { addingTag } = this.state
 						addingTag = addingTag.trim()
 						this._addTags(addingTag)
 					}}

@@ -53,6 +53,7 @@ export default class App extends Component<{}> {
           Editable Tag Cloud example
         </Text>
         <EditableTagCloud
+          delimiters={[',', '/']}
           onItemsChanged={items => this.setState({allTags: items})}
           addable
           removable
