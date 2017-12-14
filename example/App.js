@@ -61,6 +61,7 @@ export default class App extends Component<{}> {
           Editable Tag Cloud example
         </Text>
         <EditableTagCloud
+          tagInputMinWidth={100}
           addable
           removable
           tagInputProps={{

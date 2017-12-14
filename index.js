@@ -3,13 +3,11 @@ import {
 	View, StyleSheet, Platform, Text, TextInput, TouchableOpacity
 } from 'react-native'
 
-const TAG_INPUT_MIN_WIDTH = 30
-
 class EditableTagCloud extends React.Component {
 	state = {
 		items: [],
 		addingTag: '',
-		lineBreaks: {}
+		lineBreaks: {},
 	}
 
 	constructor(props) {
@@ -33,8 +31,9 @@ class EditableTagCloud extends React.Component {
 	}
 
 	_onLayoutTagInput = event => {
+		const { tagInputMinWidth } = this.props
 		let tagInputWidth = event.nativeEvent.layout.width
-		if (tagInputWidth < TAG_INPUT_MIN_WIDTH) {
+		if (tagInputWidth < tagInputMinWidth) {
 			let lineBreaks = this.state.lineBreaks
 			const { items } = this.props
 			lineBreaks[items.length - 1] = true
